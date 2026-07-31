@@ -1,0 +1,15 @@
+@import "tailwindcss";
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+@layer components {
+  .btn {
+    @apply cursor-pointer rounded bg-blue-600 px-4 py-2 text-white transition-all duration-200 hover:bg-blue-700 hover:scale-[1.01] active:scale-99 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100;
+  }
+}
