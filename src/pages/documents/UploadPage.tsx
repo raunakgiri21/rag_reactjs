@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useUploadDocumentMutation } from "@/hooks/mutations/useUploadDocumentMutation";
-import FileDropzone from "@/components/common/uploadFile/FileDropzone";
-import UploadProgress from "@/components/common/uploadFile/UploadProgress";
+import FileDropzone from "@/components/uploadFile/FileDropzone";
+import UploadProgress from "@/components/uploadFile/UploadProgress";
 
 export default function UploadPage() {
   const mutation = useUploadDocumentMutation();
@@ -20,8 +20,6 @@ export default function UploadPage() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Upload Document</h1>
-
       <FileDropzone onFileChange={handleFile} />
 
       {mutation.isPending && <UploadProgress progress={progress} />}

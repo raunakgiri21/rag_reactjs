@@ -1,25 +1,27 @@
-import { useAuthStore } from "@/store/auth.store";
+import { useLocation } from "react-router-dom";
 
-import { useLogoutMutation } from "@/hooks/mutations/useLogoutMutation";
+function getTitle(pathname: string) {
+  if (pathname === "/") return "Chat";
+  if (pathname.startsWith("/documents")) return "Documents";
+  if (pathname.startsWith("/upload")) return "Upload";
+  if (pathname.startsWith("/settings")) return "Settings";
+  if (pathname.startsWith("/login")) return "Login";
+  if (pathname.startsWith("/register")) return "Register";
+
+  return "Dashboard";
+}
 
 export default function Navbar() {
-  const user = useAuthStore((s) => s.user);
+  const location = useLocation();
 
-  const logoutMutation = useLogoutMutation();
+  const title = getTitle(location.pathname);
 
   return (
-    <header className="flex h-16 items-center justify-between border-b px-6">
-      <h1 className="text-lg font-semibold">Dashboard</h1>
+    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-gray-200 bg-white/95 px-8 backdrop-blur-sm shadow-sm">
+      <div>
+        <h1 className="text-2xl font-bold text-gray-800">{title}</h1>
 
-      <div className="flex items-center gap-4">
-        <span>{user?.name}</span>
-
-        <button
-          onClick={() => logoutMutation.mutate()}
-          className="rounded bg-red-600 px-4 py-2 text-white"
-        >
-          Logout
-        </button>
+        <p className="text-sm text-gray-500">Manage your AI workspace</p>
       </div>
     </header>
   );

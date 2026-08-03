@@ -1,9 +1,10 @@
 import { useState } from "react";
 import type { Document } from "@/api/documents/documents.schema";
-import DocumentCard from "@/components/common/documents/DocumentCard";
-import DeleteDocumentModal from "@/components/common/documents/DeleteDocumentModal";
+import DocumentCard from "@/components/documents/DocumentCard";
+import DeleteDocumentModal from "@/components/documents/DeleteDocumentModal";
 import { useDocumentsQuery } from "@/hooks/queries/useDocumentsQuery";
 import { useDeleteDocumentMutation } from "@/hooks/mutations/useDeleteDocumentMutation";
+import { Link } from "react-router-dom";
 
 export default function DocumentsPage() {
   const { data, isLoading } = useDocumentsQuery();
@@ -15,7 +16,26 @@ export default function DocumentsPage() {
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
+  if (!data || data.data.length === 0) {
+    return (
+      <div className="flex h-[60vh] flex-col items-center justify-center rounded-xl border border-dashed border-gray-300 bg-white">
+        <h2 className="text-xl font-semibold text-gray-700">
+          No documents found
+        </h2>
 
+        <p className="mt-2 text-sm text-gray-500">
+          Upload a PDF document to get started.
+        </p>
+
+        <Link
+          to="/upload"
+          className="mt-5 rounded-lg bg-blue-600 px-5 py-2 text-white transition hover:bg-blue-700"
+        >
+          Upload Document
+        </Link>
+      </div>
+    );
+  }
   return (
     <>
       <div className="space-y-3">

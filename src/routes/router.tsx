@@ -13,10 +13,8 @@ import LoginPage from "@/pages/auth/LoginPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
 
 // Dashboard Pages
-import DashboardPage from "@/pages/dashboard/DashboardPage";
-// import DocumentsPage from "@/pages/documents/DocumentsPage";
-// import UploadPage from "@/pages/documents/UploadPage";
-// import ChatPage from "@/pages/chat/ChatPage";
+// import DashboardPage from "@/pages/dashboard/DashboardPage";
+import ChatPage from "@/pages/chat/ChatPage";
 // import ProfilePage from "@/pages/profile/ProfilePage";
 // import SettingsPage from "@/pages/settings/SettingsPage";
 
@@ -41,10 +39,10 @@ export const router = createBrowserRouter([
             element: <DashboardLayout />,
 
             children: [
-              {
-                index: true,
-                element: <DashboardPage />,
-              },
+              // {
+              //   index: true,
+              //   element: <DashboardPage />,
+              // },
               {
                 path: "documents",
                 element: <DocumentsPage />,
@@ -53,10 +51,10 @@ export const router = createBrowserRouter([
                 path: "upload",
                 element: <UploadPage />,
               },
-              // {
-              //   path: "chat",
-              //   element: <ChatPage />,
-              // },
+              {
+                index: true,
+                element: <ChatPage />,
+              },
               // {
               //   path: "profile",
               //   element: <ProfilePage />,

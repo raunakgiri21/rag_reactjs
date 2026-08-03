@@ -3,6 +3,7 @@ import { toast } from "sonner";
 
 import { uploadDocument } from "@/api/documents/documents.api";
 import { documentKeys } from "@/api/documents/documents.keys";
+import { getApiError } from "@/utils/api-error";
 
 export function useUploadDocumentMutation() {
   const queryClient = useQueryClient();
@@ -25,7 +26,7 @@ export function useUploadDocumentMutation() {
     },
 
     onError(error) {
-      toast.error(error instanceof Error ? error.message : "Upload failed");
+      toast.error(getApiError(error));
     },
   });
 }

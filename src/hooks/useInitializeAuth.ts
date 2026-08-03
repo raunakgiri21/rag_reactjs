@@ -27,6 +27,7 @@ export function useInitializeAuth() {
           error.code !== "ERR_CANCELED" &&
           error.response?.status === 401
         ) {
+          console.log("Token expired or invalid. Logging out...");
           tokenService.clear();
           initialize(null);
         }
