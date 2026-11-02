@@ -7,14 +7,18 @@ import { toast } from "sonner";
 import { deleteDocument } from "@/api/documents/documents.api";
 
 import { documentKeys } from "@/api/documents/documents.keys";
+import { clearChatHistory } from "@/services/chat.service";
+import { useAuthStore } from "@/store/auth.store";
 
 export function useDeleteDocumentMutation() {
   const queryClient = useQueryClient();
+  const userId = useAuthStore((state) => state.user?.id ?? null);
 
   return useMutation({
     mutationFn: deleteDocument,
 
     onSuccess() {
+      clearChatHistory(userId);
       toast.success("Deleted");
 
       queryClient.invalidateQueries({

@@ -6,12 +6,8 @@ import { DocumentsSchema } from "./documents.schema";
 import z from "zod";
 
 export async function getDocuments() {
-  try {
-    const response = await api.get("/kb/documents");
-    return ApiResponseSchema(DocumentsSchema).parse(response.data);
-  } catch (error) {
-    console.log(error);
-  }
+  const response = await api.get("/kb/documents");
+  return ApiResponseSchema(DocumentsSchema).parse(response.data);
 }
 
 export async function deleteDocument(id: string) {
@@ -56,6 +52,18 @@ export async function uploadDocument(
 
       onProgress?.(progress);
     },
+  });
+
+  return response.data;
+}
+
+export async function getDocumentPdf(
+  documentId: string,
+  signal?: AbortSignal,
+): Promise<Blob> {
+  const response = await api.get(`/kb/documents/${documentId}/preview`, {
+    responseType: "blob",
+    signal,
   });
 
   return response.data;

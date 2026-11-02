@@ -5,6 +5,8 @@ interface Props {
   onFileChange(file: File): void;
 }
 
+const MAX_FILE_SIZE = 10 * 1024 * 1024;
+
 export default function FileDropzone({ onFileChange }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -13,6 +15,11 @@ export default function FileDropzone({ onFileChange }: Props) {
   function handleFile(file: File) {
     if (file.type !== "application/pdf") {
       toast.error("Only PDF files are allowed.");
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      toast.error("Maximum file size is 10 MB.");
       return;
     }
 

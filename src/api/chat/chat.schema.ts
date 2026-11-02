@@ -5,11 +5,13 @@ export const ChatSourceSchema = z.object({
   score: z.number(),
   page: z.number(),
   chunkId: z.string(),
+  documentId: z.string(),
 });
 
 export const ChatResponseSchema = z.object({
   answer: z.string(),
   confidence: z.number(),
+  suggestions: z.array(z.string()),
   sources: z.array(ChatSourceSchema),
 });
 

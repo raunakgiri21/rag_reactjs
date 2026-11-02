@@ -22,6 +22,7 @@ import ChatPage from "@/pages/chat/ChatPage";
 import NotFoundPage from "@/pages/errors/NotFoundPage";
 import DocumentsPage from "@/pages/documents/DocumentsPage";
 import UploadPage from "@/pages/documents/UploadPage";
+import DocumentPreview from "@/pages/documents/DocumentPreview";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,10 @@ export const router = createBrowserRouter([
               {
                 path: "upload",
                 element: <UploadPage />,
+              },
+              {
+                path: "/documents/:documentId",
+                element: <DocumentPreview />,
               },
               {
                 index: true,

@@ -1,77 +1,61 @@
-# React + TypeScript + Vite
+# RAG AI Assistant
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React and TypeScript frontend for uploading PDF documents, viewing them, and asking questions against their content through a retrieval-augmented generation (RAG) backend.
 
-Currently, two official plugins are available:
+## Prerequisites
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js and npm
+- A compatible backend API configured for authentication, document upload, PDF preview, and chat
 
-## React Compiler
+> **Backend requirement:** This repository contains the frontend only. An appropriate backend setup is required for the application to provide authentication, document processing, and chat functionality. The backend must be running and expose the API routes expected by this frontend.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+## Setup
 
-Note: This will impact Vite dev & build performances.
+1. Install dependencies:
 
-## Expanding the ESLint configuration
+   ```bash
+   npm install
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+2. Create a `.env` file in the project root:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+   ```env
+   VITE_API_URL=http://localhost:5000/api
+   ```
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+   Set `VITE_API_URL` to the base URL of your compatible backend API.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. Start the development server:
 
+   ```bash
+   npm run dev
+   ```
+
+4. Open the local URL shown by Vite in your browser.
+
+## Available scripts
+
+```bash
+npm run dev       # Start the development server
+npm run build     # Type-check and create a production build
+npm run lint      # Run ESLint
+npm run preview   # Preview the production build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Main features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- User registration, login, logout, and token refresh
+- PDF document upload and deletion
+- PDF preview with page navigation and zoom controls
+- RAG chat with Markdown responses and document sources
+- Per-user chat history stored in browser local storage
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Expected backend capabilities
 
-```
+The backend should provide compatible endpoints for:
+
+- Authentication: `/auth/login`, `/auth/register`, `/auth/me`, `/auth/logout`, and `/auth/refresh`
+- Documents: `/kb/documents`, `/kb/upload`, and `/kb/documents/:documentId/preview`
+- Chat: `/chat/ask`
+
+The API response and request formats must match the Zod schemas in `src/api`.

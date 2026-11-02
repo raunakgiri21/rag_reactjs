@@ -1,6 +1,8 @@
 import axios from "axios";
 import { api } from "./axios";
 import { tokenService } from "./token.service";
+import { RefreshResponseSchema } from "@/api/auth/auth.schema";
+import { logoutSuccess } from "@/services/auth.service";
 
 let isRefreshing = false;
 
@@ -67,13 +69,15 @@ export function setupInterceptors() {
       try {
         const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/auth/refresh`,
-          {},
+          {
+            refreshToken: tokenService.getRefreshToken(),
+          },
           {
             withCredentials: true,
           },
         );
 
-        const tokens = response.data.data;
+        const tokens = RefreshResponseSchema.parse(response.data.data);
 
         tokenService.setTokens(tokens.accessToken, tokens.refreshToken);
 
@@ -83,7 +87,7 @@ export function setupInterceptors() {
 
         return api(originalRequest);
       } catch (err) {
-        tokenService.clear();
+        logoutSuccess();
 
         processQueue(err);
 

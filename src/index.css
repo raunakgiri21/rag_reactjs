@@ -13,3 +13,38 @@ body,
     @apply cursor-pointer rounded bg-blue-600 px-4 py-2 text-white transition-all duration-200 hover:bg-blue-700 hover:scale-[1.01] active:scale-99 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100;
   }
 }
+
+@keyframes loading-dot {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+
+.loading-dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.loading-dots span {
+  width: 4px;
+  height: 4px;
+  border-radius: 9999px;
+  background-color: currentColor;
+  animation: loading-dot 1.2s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.loading-dots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
